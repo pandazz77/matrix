@@ -1,7 +1,7 @@
 matrix1 = [[1,2,3],[4,5,6],[7,8,9]]
 matrix2 = [[11],[12],[13]]
 
-def multiplymatrix(matrix1,matrix2):
+def multiplymatrix(matrix1,matrix2): #Умножение матрицы на матрицу
 	resultmatrix =[]
 	resultmatrix1 = []
 	if len(matrix1[0]) == len(matrix2):
@@ -18,12 +18,12 @@ def multiplymatrix(matrix1,matrix2):
 		return(resultmatrix1)
 	else:
 		return('Error')
-def multiplymatrixnum(matrix,number):
+def multiplymatrixnum(matrix,number): #умножение матрицы на число
 	for i in range(len(matrix)):
 		for k in range(len(matrix[0])):
 			matrix[i][k]*=number
 	return(matrix)
-def addmatrix(matrix1,matrix2):
+def addmatrix(matrix1,matrix2): #суммирование матриц
 	resultmatrix = []
 	if len(matrix1) == len(matrix2) and len(matrix1[0]) == len(matrix2[0]):
 		for s in range(len(matrix1)):
@@ -34,7 +34,7 @@ def addmatrix(matrix1,matrix2):
 		return(resultmatrix)
 	else:
 		return('Error')
-def transpmatrix(matrix):
+def transpmatrix(matrix): #транспонирование матрицы
 	tempmatrix=[]
 	resultmatrix=[]
 	for i in range(len(matrix)):
