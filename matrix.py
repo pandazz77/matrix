@@ -1,3 +1,8 @@
+def buildmatrix(array): #Вывод матрицы в виде строки
+	string = ''
+	for i in array:
+		string+=str(i)+'\n'
+	return(string)
 def xMatrix(matrix1,matrix2): #Умножение матрицы на матрицу
 	resultmatrix =[]
 	resultmatrix1 = []
@@ -32,13 +37,5 @@ def addMatrix(matrix1,matrix2): #суммирование матриц
 	else:
 		return('Error')
 def transposition(matrix): #транспонирование матрицы
-	tempmatrix=[]
-	resultmatrix=[]
-	for i in range(len(matrix)):
-		for k in range(len(matrix[0])):
-			tempmatrix.append(matrix[k][i])
-	m=0
-	while m<len(tempmatrix):
-		resultmatrix.append(tempmatrix[m:m+3])
-		m+=3
+	resultmatrix = [list(i) for i in zip(*matrix)]
 	return(resultmatrix)
