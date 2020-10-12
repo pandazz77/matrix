@@ -18,6 +18,11 @@ def multiplymatrix(matrix1,matrix2):
 		return(resultmatrix1)
 	else:
 		return('Error')
+def multiplymatrixnum(matrix,number):
+	for i in range(len(matrix)):
+		for k in range(len(matrix[0])):
+			matrix[i][k]*=number
+	return(matrix)
 def addmatrix(matrix1,matrix2):
 	resultmatrix = []
 	if len(matrix1) == len(matrix2) and len(matrix1[0]) == len(matrix2[0]):
@@ -43,3 +48,4 @@ def transpmatrix(matrix):
 print(multiplymatrix(matrix1,matrix2))
 print(addmatrix(matrix1,matrix2))
 print(transpmatrix(matrix1))
+print(multiplymatrixnum(matrix1,2))
