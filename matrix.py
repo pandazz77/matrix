@@ -1,6 +1,3 @@
-matrix1 = [[1,2,3],[4,5,6],[7,8,9]]
-matrix2 = [[11],[12],[13]]
-
 def multiplymatrix(matrix1,matrix2): #Умножение матрицы на матрицу
 	resultmatrix =[]
 	resultmatrix1 = []
@@ -45,7 +42,3 @@ def transpmatrix(matrix): #транспонирование матрицы
 		resultmatrix.append(tempmatrix[m:m+3])
 		m+=3
 	return(resultmatrix)
-print(multiplymatrix(matrix1,matrix2))
-print(addmatrix(matrix1,matrix2))
-print(transpmatrix(matrix1))
-print(multiplymatrixnum(matrix1,2))
