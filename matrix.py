@@ -13,9 +13,11 @@ def multiplymatrix(matrix1,matrix2):
 				resultmatrix.append(sum(tempmatrix))
 		m=0
 		while m<len(resultmatrix):
-			resultmatrix1.append(resultmatrix[m:m+3])
+			resultmatrix1.append(resultmatrix[m:m+len(matrix1)])
 			m+=3
 		return(resultmatrix1)
+	else:
+		return('Error')
 def addmatrix(matrix1,matrix2):
 	resultmatrix = []
 	if len(matrix1) == len(matrix2) and len(matrix1[0]) == len(matrix2[0]):
@@ -25,5 +27,19 @@ def addmatrix(matrix1,matrix2):
 				tempmatrix.append(matrix1[s][k]+matrix2[s][k])
 			resultmatrix.append(tempmatrix)
 		return(resultmatrix)
+	else:
+		return('Error')
+def transpmatrix(matrix):
+	tempmatrix=[]
+	resultmatrix=[]
+	for i in range(len(matrix)):
+		for k in range(len(matrix[0])):
+			tempmatrix.append(matrix[k][i])
+	m=0
+	while m<len(tempmatrix):
+		resultmatrix.append(tempmatrix[m:m+3])
+		m+=3
+	return(resultmatrix)
 print(multiplymatrix(matrix1,matrix2))
 print(addmatrix(matrix1,matrix2))
+print(transpmatrix(matrix1))
