@@ -1,41 +1,94 @@
-def buildmatrix(array): #Вывод матрицы в виде строки
-	string = ''
-	for i in array:
-		string+=str(i)+'\n'
-	return(string)
-def xMatrix(matrix1,matrix2): #Умножение матрицы на матрицу
-	resultmatrix =[]
-	resultmatrix1 = []
-	if len(matrix1[0]) == len(matrix2):
-		for s in range(len(matrix2[0])):
-			for k in range(len(matrix2)):
-				tempmatrix = []
-				for i in range(len(matrix1[0])):
-					tempmatrix.append(matrix1[k][i]*matrix2[i][s])
-				resultmatrix.append(sum(tempmatrix))
-		m=0
-		while m<len(resultmatrix):
-			resultmatrix1.append(resultmatrix[m:m+len(matrix1)])
-			m+=3
-		return(resultmatrix1)
-	else:
-		return('Error')
-def xNum(matrix,number): #умножение матрицы на число
-	for i in range(len(matrix)):
-		for k in range(len(matrix[0])):
-			matrix[i][k]*=number
-	return(matrix)
-def addMatrix(matrix1,matrix2): #суммирование матриц
-	resultmatrix = []
-	if len(matrix1) == len(matrix2) and len(matrix1[0]) == len(matrix2[0]):
-		for s in range(len(matrix1)):
-			tempmatrix=[]
-			for k in range(len(matrix1[0])):
-				tempmatrix.append(matrix1[s][k]+matrix2[s][k])
-			resultmatrix.append(tempmatrix)
-		return(resultmatrix)
-	else:
-		return('Error')
-def transposition(matrix): #транспонирование матрицы
-	resultmatrix = [list(i) for i in zip(*matrix)]
-	return(resultmatrix)
+class Matrix(object):
+	def __init__(self,matrix):
+		self.matrix = matrix
+		for ar in range(len(matrix)):
+			if len(matrix[ar]) != len(matrix[ar-1]):
+				raise Exception('Bad size')
+
+		if len(matrix) >1:
+			self.size = (len(matrix),len(matrix[1]))
+		else:
+			self.size = 1
+
+	def __str__(self): #Поведение объекта при вызове print()
+		string = ''
+		for i in self.matrix:
+			string+=str(i)+'\n'
+		return string
+
+	def __iter__(self):
+		return iter(self.matrix)
+
+	def __mul__(self,other): #Поведение объекта при умножении
+		if isinstance(other, int): #Умножение матрицы на число
+			for i in range(len(self.matrix)):
+				for k in range(len(self.matrix[0])):
+					self.matrix[i][k]*=other
+			return matrix
+		elif isinstance(other,Matrix): #Умножение матрицы на матрицу
+			if self.size[0] == other.size[1]:
+				resultmatrix = [[0 for row in range(other.size[1])] for col in range(self.size[0])]
+				for i in range(self.size[0]):
+					for j in range(other.size[1]):
+						for k in range(self.size[1]):
+							resultmatrix[i][j] += self.matrix[i][k] * other.matrix[k][j]
+				return Matrix(resultmatrix)
+
+	def __pow__(self, other): #Поведение объекта при вовзедении в степень
+		if other == 1:
+			return Matrix(self.matrix)
+		pr = Matrix(self.matrix)*Matrix(self.matrix)
+		for i in range(other-2):
+			pr*=Matrix(self.matrix)
+		return pr
+
+	def __add__(self,other): #Поведение объекта при суммировании (суммирование матриц)
+		if isinstance(other, Matrix):
+			resultmatrix = []
+			if self.size == other.size:
+				for s in range(len(self.matrix)):
+					tempmatrix=[]
+					for k in range(len(self.matrix[0])):
+						tempmatrix.append(self.matrix[s][k]+other.matrix[s][k])
+					resultmatrix.append(tempmatrix)
+				return Matrix(resultmatrix)
+			else:
+				raise Exception('Bad size')
+		elif isinstance(other, int):
+			return NotImplemented
+		else:
+			return NotImplemented
+
+	def __sub__(self,other): #Поведение объекта при вычитании (вычитание матриц)
+		if isinstance(other, Matrix):
+			resultmatrix = []
+			if self.size == other.size:
+				for s in range(len(self.matrix)):
+					tempmatrix=[]
+					for k in range(len(self.matrix[0])):
+						tempmatrix.append(self.matrix[s][k]-other.matrix[s][k])
+					resultmatrix.append(tempmatrix)
+				return Matrix(resultmatrix)
+			else:
+				raise Exception('Bad size')
+		elif isinstance(other, int):
+			return NotImplemented
+		else:
+			return NotImplemented
+	def transp(self):
+		return Matrix([list(i) for i in zip(*self.matrix)])
+	def det(self):
+		if self.size[0] != self.size[1]:
+			raise Exception('Bad size')
+		m = self.matrix
+		def getMatrixMinor(m,i,j):
+			return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
+		def getMatrixDeternminant(m):
+			if len(m) == 2:
+				return m[0][0]*m[1][1]-m[0][1]*m[1][0]
+
+			determinant = 0
+			for c in range(len(m)):
+				determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
+			return determinant
+		return getMatrixDeternminant(m)
